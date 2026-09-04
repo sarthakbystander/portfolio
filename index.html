@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sarthak Bystander | Student Builder & AI/Web Developer</title>
-    
+
     <!-- Import Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -180,7 +180,7 @@
             line-height: 1;
             text-align: right;
         }
-        
+
         .nationality span {
             font-size: 0.75rem;
             font-family: var(--font-body);
@@ -663,7 +663,7 @@
         <!-- Left Side: Polaroid -->
         <div class="polaroid-wrapper interactable">
             <div class="decor-text">About ME</div>
-            
+
             <!-- Graphic Decor SVG -->
             <svg class="decor-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M50 10C35 10 25 25 25 40C25 55 35 65 35 75V85C35 87.7614 37.2386 90 40 90H60C62.7614 90 65 87.7614 65 85V75C65 65 75 55 75 40C75 25 65 10 50 10Z" fill="black"/>
@@ -677,7 +677,7 @@
 
             <div class="polaroid">
                 <!-- User Photo -->
-                <img src="WhatsApp Image 2026-07-26 at 11.19.18 AM (1).jpeg" alt="Sarthak Bystander Photo">
+                <img src="image.jpg" alt="Sarthak Bystander Photo">
                 <div class="polaroid-text">
                     <span class="timeline">CODING SINCE AGE 12</span>
                     <span class="nationality">
@@ -691,7 +691,7 @@
 
         <!-- Right Side: Text Content -->
         <div class="text-content">
-            
+
             <!-- Tech Stack Badges & Status Bar BEFORE HII!! -->
             <div class="hero-top-bar">
                 <div class="status-badge">
@@ -742,7 +742,7 @@
             <h2 class="role-headline">Student Developer, AI Builder & Growth Marketer</h2>
 
             <p class="bio-text">I'm <strong>Sarthak Bystander</strong> (<code>sarthakbystander</code>). I engineer open-source software, agentic AI tools, and organic growth engines that scale web products.</p>
-            
+
             <!-- Value Proposition & Key Hireability Track Record -->
             <div class="value-props">
                 <div class="prop-item">
@@ -775,7 +775,7 @@
         <div class="section-container">
             <h1 class="section-title">FLAGSHIP WORKS</h1>
             <p class="section-subtitle">A collection of open-source projects, AI tools, and growth systems I've built and shipped.</p>
-            
+
             <div class="portfolio-grid">
                 <!-- DevSnips -->
                 <div class="project-card interactable">
@@ -787,7 +787,7 @@
                     <div class="card-footer">
                         <span>Vue • Tailwind • Design Tokens</span>
                         <div>
-                            <a href="https://devsnips.biz/" target="_blank">LIVE ↗</a> | 
+                            <a href="https://devsnips.biz/" target="_blank">LIVE ↗</a> |
                             <a href="https://github.com/sarthakbystander/DevSnips" target="_blank">GH ↗</a>
                         </div>
                     </div>
@@ -803,7 +803,7 @@
                     <div class="card-footer">
                         <span>Python • LLMs • Agents</span>
                         <div>
-                            <a href="https://lensdev.pages.dev/" target="_blank">WEB ↗</a> | 
+                            <a href="https://lensdev.pages.dev/" target="_blank">WEB ↗</a> |
                             <a href="https://pypi.org/project/lensdev/" target="_blank">PYPI ↗</a>
                         </div>
                     </div>
@@ -927,7 +927,7 @@
     <script>
         // Custom Cursor Logic
         const cursor = document.getElementById('cursor');
-        
+
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
@@ -946,11 +946,11 @@
         // Single Page Application Tab Switcher
         function switchTab(tabId) {
             const sections = ['about', 'works', 'exp'];
-            
+
             sections.forEach(s => {
                 const secEl = document.getElementById(s);
                 const btnEl = document.getElementById(`btn-${s}`);
-                
+
                 if (s === tabId) {
                     secEl.classList.add('active-section');
                     if (btnEl) btnEl.classList.add('active');
