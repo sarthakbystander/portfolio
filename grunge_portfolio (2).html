@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarthak Bystander | Student Builder & AI/Web Developer</title>
+    
+    <!-- Import Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-main: #ffffff;
+            --text-muted: #a3a3a3;
+            --accent-pink: #ff0055;
+            --font-body: 'Inter', sans-serif;
+            --font-heading: 'Bebas Neue', sans-serif;
+            --font-hand: 'Permanent Marker', cursive;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: none; /* Hide default cursor for custom one */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-pink);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        .cursor.hovering {
+            width: 42px;
+            height: 42px;
+            background-color: rgba(255, 0, 85, 0.2);
+        }
+
+        /* Navigation */
+        nav {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            line-height: 0.9;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--accent-pink);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            margin-left: 1.5rem;
+            font-family: var(--font-body);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links button:hover, .nav-links button.active {
+            color: var(--accent-pink);
+        }
+
+        /* Section Toggling Utilities */
+        .section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            flex-grow: 1;
+            padding: 3rem 5%;
+        }
+
+        .section.active-section {
+            display: flex;
+            opacity: 1;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* About Section Layout */
+        #about {
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 5rem;
+        }
+
+        .polaroid-wrapper {
+            position: relative;
+            transform: rotate(-3deg);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .polaroid-wrapper:hover {
+            transform: rotate(0deg) scale(1.04);
+        }
+
+        .polaroid {
+            background: #f4f4f4;
+            padding: 15px 15px 45px 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            max-width: 360px;
+            border-radius: 2px;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(100%) contrast(125%) brightness(0.9);
+            border: 1px solid #ddd;
+        }
+
+        .polaroid-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 18px;
+            color: #111;
+            font-family: var(--font-hand);
+        }
+
+        /* Adjusted font size for polaroid timeline */
+        .polaroid-text .timeline {
+            font-size: 1.05rem;
+            transform: rotate(-2deg);
+            letter-spacing: 0.5px;
+        }
+
+        .polaroid-text .nationality {
+            font-size: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            text-align: right;
+        }
+        
+        .nationality span {
+            font-size: 0.75rem;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            color: #555;
+        }
+
+        /* Decorative Visual Accents */
+        .decor-text {
+            position: absolute;
+            font-family: var(--font-hand);
+            color: var(--text-main);
+            font-size: 2.8rem;
+            top: -45px;
+            left: -25px;
+            transform: rotate(-12deg);
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+
+        .decor-icon {
+            position: absolute;
+            top: -50px;
+            right: -20px;
+            width: 75px;
+            height: 75px;
+            filter: invert(1);
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        .decor-pink {
+            position: absolute;
+            bottom: -25px;
+            right: -45px;
+            font-family: var(--font-hand);
+            color: var(--accent-pink);
+            font-size: 3.5rem;
+            transform: rotate(8deg);
+        }
+
+        /* Text Content & Hireability Section Styling */
+        .text-content {
+            max-width: 580px;
+            position: relative;
+        }
+
+        /* Pre-Hero Tech Bar & Status */
+        .hero-top-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 0, 85, 0.1);
+            border: 1px solid var(--accent-pink);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-pink);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-pink);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-pink);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+
+        /* Redesigned Tech Chips Bar */
+        .tech-icons-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tech-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #121212;
+            border: 1px solid #262626;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #cccccc;
+            transition: all 0.25s ease;
+        }
+
+        .tech-chip:hover {
+            border-color: var(--accent-pink);
+            color: #ffffff;
+            background: rgba(255, 0, 85, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .tech-chip svg {
+            width: 15px;
+            height: 15px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .giant-hi {
+            font-family: var(--font-heading);
+            font-size: 6.8rem;
+            line-height: 0.8;
+            margin-bottom: 0.8rem;
+            letter-spacing: 4px;
+            text-shadow: 4px 4px 0px rgba(255,0,85,0.3);
+        }
+
+        .role-headline {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            letter-spacing: 1.5px;
+            color: var(--accent-pink);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .bio-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #d1d1d1;
+        }
+
+        /* Hireability Highlight Cards */
+        .value-props {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 1.8rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-pink);
+            padding: 12px 18px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .prop-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.92rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+        }
+
+        .prop-icon {
+            color: var(--accent-pink);
+            font-weight: 800;
+        }
+
+        /* Call To Action Buttons */
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.8rem;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 26px;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cta-btn.primary {
+            background-color: var(--accent-pink);
+            color: #ffffff;
+            border: 1px solid var(--accent-pink);
+            box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4);
+        }
+
+        .cta-btn.primary:hover {
+            background-color: #e0004b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 85, 0.6);
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-btn.secondary:hover {
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+            transform: translateY(-2px);
+        }
+
+        .tag-pills {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-pink);
+        }
+
+        /* Works & Experience Section Layout */
+        .section-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 4.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-pink);
+            letter-spacing: 3px;
+            line-height: 1;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Projects Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .project-card {
+            background: #111111;
+            border: 1px solid #222222;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 280px;
+            transition: all 0.3s ease;
+            position: relative;
+            text-decoration: none;
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 0, 85, 0.15) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent-pink);
+            transform: translateY(-6px);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card .card-category {
+            font-family: var(--font-hand);
+            color: var(--accent-pink);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card h3 {
+            font-family: var(--font-heading);
+            font-size: 2.4rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+            line-height: 1;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-main);
+            border-top: 1px solid #222;
+            padding-top: 1rem;
+            margin-top: auto;
+            gap: 10px;
+        }
+
+        .project-card .card-footer a {
+            color: var(--accent-pink);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .project-card .card-footer a:hover {
+            color: #ffffff;
+        }
+
+        /* Experience & Stack Styling */
+        .exp-box {
+            background: #111;
+            border: 1px solid #222;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .exp-box h3 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            letter-spacing: 1px;
+            color: var(--accent-pink);
+        }
+
+        .exp-box .role {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .exp-box p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-group {
+            background: #111;
+            border: 1px solid #222;
+            padding: 1.5rem;
+        }
+
+        .skill-group h4 {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            color: var(--accent-pink);
+            margin-bottom: 0.8rem;
+        }
+
+        .skill-group ul {
+            list-style: none;
+            color: #cccccc;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* Footer / Social Links */
+        footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 2.5rem 5%;
+            flex-wrap: wrap;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: auto;
+        }
+
+        .social-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border: 1px solid var(--text-main);
+            border-radius: 50%;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-pill svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+            transition: fill 0.3s ease;
+        }
+
+        .social-pill:hover {
+            background-color: var(--accent-pink);
+            border-color: var(--accent-pink);
+            color: #ffffff;
+            transform: translateY(-3px);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            #about { gap: 3rem; }
+            .giant-hi { font-size: 4.8rem; }
+            .decor-text { font-size: 2rem; top: -35px; }
+            .polaroid { max-width: 100%; }
+            nav { flex-direction: column; gap: 1rem; text-align: center; }
+            .nav-links { margin-top: 0.5rem; }
+            .nav-links button { margin: 0 0.8rem; }
+            .section-title { font-size: 3.2rem; }
+            .hero-top-bar { align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor Element -->
+    <div class="cursor" id="cursor"></div>
+
+    <nav>
+        <a href="#" class="logo interactable" onclick="switchTab('about')">
+            <div class="logo-icon"></div>
+            SARTHAK<br>BYSTANDER
+        </a>
+        <div class="nav-links">
+            <button id="btn-about" class="active interactable" onclick="switchTab('about')">About</button>
+            <button id="btn-works" class="interactable" onclick="switchTab('works')">Works</button>
+            <button id="btn-exp" class="interactable" onclick="switchTab('exp')">Experience & Stack</button>
+        </div>
+    </nav>
+
+    <!-- ABOUT SECTION -->
+    <main id="about" class="section active-section">
+        <!-- Left Side: Polaroid -->
+        <div class="polaroid-wrapper interactable">
+            <div class="decor-text">About ME</div>
+            
+            <!-- Graphic Decor SVG -->
+            <svg class="decor-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 10C35 10 25 25 25 40C25 55 35 65 35 75V85C35 87.7614 37.2386 90 40 90H60C62.7614 90 65 87.7614 65 85V75C65 65 75 55 75 40C75 25 65 10 50 10Z" fill="black"/>
+                <circle cx="35" cy="45" r="5" fill="white"/>
+                <circle cx="65" cy="45" r="5" fill="white"/>
+                <path d="M40 70H60" stroke="white" stroke-width="3"/>
+                <path d="M45 65V75" stroke="white" stroke-width="2"/>
+                <path d="M50 65V75" stroke="white" stroke-width="2"/>
+                <path d="M55 65V75" stroke="white" stroke-width="2"/>
+            </svg>
+
+            <div class="polaroid">
+                <!-- User Photo -->
+                <img src="WhatsApp Image 2026-07-26 at 11.19.18 AM (1).jpeg" alt="Sarthak Bystander Photo">
+                <div class="polaroid-text">
+                    <span class="timeline">CODING SINCE AGE 12</span>
+                    <span class="nationality">
+                        <span>Location:</span>
+                        REMOTE
+                    </span>
+                </div>
+            </div>
+            <div class="decor-pink">xx</div>
+        </div>
+
+        <!-- Right Side: Text Content -->
+        <div class="text-content">
+            
+            <!-- Tech Stack Badges & Status Bar BEFORE HII!! -->
+            <div class="hero-top-bar">
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    OPEN FOR ROLES & CONTRACTS
+                </div>
+
+                <div class="tech-icons-row">
+                    <!-- Python Badge -->
+                    <div class="tech-chip interactable" title="Python">
+                        <svg viewBox="0 0 24 24"><path d="M14.25 2.5c5.38 0 5 2.35 5 2.35v2.41H14.1v.82h5.15s3.25-.37 3.25 4.82c0 5.19-2.84 5.01-2.84 5.01h-1.7v-2.39s.12-2.84-2.8-2.84h-5.01s-2.73.08-2.73-2.61c0-2.69 2.37-2.57 2.37-2.57h1.01V5.98s-.36-3.48 4.65-3.48zm-1.87 1.62a.88.88 0 1 0 0 1.76.88.88 0 0 0 0-1.76zM9.75 21.5c-5.38 0-5-2.35-5-2.35v-2.41h5.15v-.82H4.75s-3.25.37-3.25-4.82c0-5.19 2.84-5.01 2.84-5.01h1.7v2.39s-.12 2.84 2.8 2.84h5.01s2.73-.08 2.73 2.61c0 2.69-2.37 2.57-2.37 2.57h-1.01v1.54s.36 3.49-4.65 3.49zm1.87-1.62a.88.88 0 1 0 0-1.76.88.88 0 0 0 0 1.76z"/></svg>
+                        <span>Python</span>
+                    </div>
+
+                    <!-- C++ Badge -->
+                    <div class="tech-chip interactable" title="C++">
+                        <svg viewBox="0 0 24 24"><path d="M22.22 10.66h-1.42V9.24a.71.71 0 0 0-1.42 0v1.42h-1.42a.71.71 0 0 0 0 1.42h1.42v1.42a.71.71 0 0 0 1.42 0v-1.42h1.42a.71.71 0 0 0 0-1.42zm-5.12 0h-1.42V9.24a.71.71 0 0 0-1.42 0v1.42h-1.42a.71.71 0 0 0 0 1.42h1.42v1.42a.71.71 0 0 0 1.42 0v-1.42h1.42a.71.71 0 0 0 0-1.42zM11.66 4.2a8 8 0 1 0 0 15.6 7.93 7.93 0 0 0 5.66-2.38.71.71 0 0 0-1-1 6.51 6.51 0 1 1 0-8.44.71.71 0 1 0 1-1 7.93 7.93 0 0 0-5.66-2.78z"/></svg>
+                        <span>C++</span>
+                    </div>
+
+                    <!-- Go Badge -->
+                    <div class="tech-chip interactable" title="Go">
+                        <svg viewBox="0 0 24 24"><path d="M1.81 10.25c.34-.15.7-.27 1.07-.35a3.1 3.1 0 0 1 2.05.29c.47.24.87.6 1.16 1.04l.11.17c-.55.22-1.09.47-1.6.77-.37.22-.72.47-1.04.75a3.2 3.2 0 0 0 1.4 5.37 5.5 5.5 0 0 0 3.82-.41l.16-.08c.55-.31 1.05-.7 1.49-1.15.53-.55.95-1.2 1.22-1.92.14-.38.23-.78.27-1.18h-3.41v-1.9h5.68c.08.57.08 1.15.01 1.72-.15 1.15-.58 2.25-1.25 3.19a8.2 8.2 0 0 1-2.48 2.27 8.35 8.35 0 0 1-5.74.83 5.48 5.48 0 0 1-3.72-2.58 5.5 5.5 0 0 1-.36-4.47c.29-.86.82-1.62 1.52-2.21zm13.1-6.75h3.61c.42 0 .82.17 1.12.47.3.3.47.7.47 1.12v1.81h2.17c.42 0 .82.17 1.12.47.3.3.47.7.47 1.12v1.81h-2.17v2.17c0 .42-.17.82-.47 1.12a1.58 1.58 0 0 1-1.12.47h-1.81v2.17c0 .42-.17.82-.47 1.12a1.58 1.58 0 0 1-1.12.47h-1.81v-2.17h-2.17a1.58 1.58 0 0 1-1.12-.47 1.58 1.58 0 0 1-.47-1.12v-1.81h2.17v-2.17c0-.42.17-.82.47-1.12.3-.3.7-.47 1.12-.47zm.36 2.35v2.17h2.17v-2.17zm0 3.98v2.17h2.17v-2.17z"/></svg>
+                        <span>Go</span>
+                    </div>
+
+                    <!-- Vue Badge -->
+                    <div class="tech-chip interactable" title="Vue">
+                        <svg viewBox="0 0 24 24"><path d="M2 3h3.5L12 15 18.5 3H22L12 21 2 3zm4.5 0h3L12 8.5 14.5 3h3L12 13.5 6.5 3z"/></svg>
+                        <span>Vue</span>
+                    </div>
+
+                    <!-- Flask Badge -->
+                    <div class="tech-chip interactable" title="Flask">
+                        <svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 8.7V3h1a1 1 0 0 0 0-2H9a1 1 0 0 0 0 2h1v5.7L4.2 18.4A3 3 0 0 0 6.7 23h10.6a3 3 0 0 0 2.5-4.6zM12 10.5l5.5 9.2a1 1 0 0 1-.8 1.3H7.3a1 1 0 0 1-.8-1.3l5.5-9.2z"/></svg>
+                        <span>Flask</span>
+                    </div>
+
+                    <!-- Tailwind Badge -->
+                    <div class="tech-chip interactable" title="Tailwind">
+                        <svg viewBox="0 0 24 24"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.336 6.182 14.975 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C7.666 17.818 9.027 19.2 12.001 19.2c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.336 13.382 8.975 12 6.001 12z"/></svg>
+                        <span>Tailwind</span>
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="giant-hi">HI!!</h1>
+            <h2 class="role-headline">Student Developer, AI Builder & Growth Marketer</h2>
+
+            <p class="bio-text">I'm <strong>Sarthak Bystander</strong> (<code>sarthakbystander</code>). I engineer open-source software, agentic AI tools, and organic growth engines that scale web products.</p>
+            
+            <!-- Value Proposition & Key Hireability Track Record -->
+            <div class="value-props">
+                <div class="prop-item">
+                    <span class="prop-icon">⚡</span>
+                    <span><strong>Proven Product Owner:</strong> Founder & Lead Dev at <strong>DevSnips</strong> (open-source UI platform) and creator of <strong>LensDev</strong> (PyPI AI research agent).</span>
+                </div>
+                <div class="prop-item">
+                    <span class="prop-icon">📈</span>
+                    <span><strong>Growth & Distribution:</strong> Growth Marketing Manager at <strong>ISROOT Tool</strong> + scaled DiscoverStack to 5,600+ organic views via SEO automation.</span>
+                </div>
+            </div>
+
+            <!-- Call-To-Action Group -->
+            <div class="cta-group">
+                <button onclick="switchTab('works')" class="cta-btn primary interactable">Explore Flagship Works ↗</button>
+                <a href="https://www.linkedin.com/in/sarthak-bystander/" target="_blank" class="cta-btn secondary interactable">Hire / Collaborate ✉</a>
+            </div>
+
+            <div class="tag-pills">
+                <span class="tag-pill">AI Agents</span>
+                <span class="tag-pill">Frontend Arch</span>
+                <span class="tag-pill">Growth Marketing</span>
+                <span class="tag-pill">Open Source</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- WORKS SECTION -->
+    <main id="works" class="section">
+        <div class="section-container">
+            <h1 class="section-title">FLAGSHIP WORKS</h1>
+            <p class="section-subtitle">A collection of open-source projects, AI tools, and growth systems I've built and shipped.</p>
+            
+            <div class="portfolio-grid">
+                <!-- DevSnips -->
+                <div class="project-card interactable">
+                    <div>
+                        <div class="card-category">FLAGSHIP • OPEN SOURCE</div>
+                        <h3>DEVSNIPS</h3>
+                        <p>A comprehensive open-source developer resource platform delivering copy-paste UI components, design tokens, and frontend templates across Vue, Tailwind, and HTML.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>Vue • Tailwind • Design Tokens</span>
+                        <div>
+                            <a href="https://devsnips.biz/" target="_blank">LIVE ↗</a> | 
+                            <a href="https://github.com/sarthakbystander/DevSnips" target="_blank">GH ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LensDev -->
+                <div class="project-card interactable">
+                    <div>
+                        <div class="card-category">AI TOOLING • CLI</div>
+                        <h3>LENSDEV</h3>
+                        <p>Local AI research agent that generates structured research workspaces. Built with Python, agentic tool-calling architecture, OpenRouter, and Ollama integration.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>Python • LLMs • Agents</span>
+                        <div>
+                            <a href="https://lensdev.pages.dev/" target="_blank">WEB ↗</a> | 
+                            <a href="https://pypi.org/project/lensdev/" target="_blank">PYPI ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DiscoverStack -->
+                <div class="project-card interactable">
+                    <div>
+                        <div class="card-category">SEO & CONTENT ENGINE</div>
+                        <h3>DISCOVERSTACK</h3>
+                        <p>Automated content and tech publishing platform engineered for organic search growth. Drove 5,600+ organic views via automated semantic duplicate detection.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>SEO • Automation • Analytics</span>
+                        <div>
+                            <a href="https://github.com/sarthakbystander" target="_blank">REPO ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- EXPERIENCE & STACK SECTION -->
+    <main id="exp" class="section">
+        <div class="section-container">
+            <h1 class="section-title">EXPERIENCE & STACK</h1>
+            <p class="section-subtitle">Product ownership & growth marketing experience combined with core engineering capabilities.</p>
+
+            <div class="exp-box interactable">
+                <h3>DEVSNIPS</h3>
+                <div class="role">Founder & Lead Developer</div>
+                <p>Architecting and maintaining an open-source developer resource platform providing copy-paste UI components, design systems, and frontend templates.</p>
+            </div>
+
+            <div class="exp-box interactable">
+                <h3>ISROOT TOOL</h3>
+                <div class="role">Growth Marketing Manager</div>
+                <p>Heading growth marketing initiatives, content distribution channels, and acquisition experimentation for developer tools and software utilities.</p>
+            </div>
+
+            <h2 style="font-family: var(--font-heading); font-size: 2.5rem; letter-spacing: 2px; color: var(--text-main); margin-top: 1rem;">TECHNICAL CAPABILITIES</h2>
+
+            <div class="skills-grid">
+                <div class="skill-group interactable">
+                    <h4>LANGUAGES & FRAMEWORKS</h4>
+                    <ul>
+                        <li>Python</li>
+                        <li>C++</li>
+                        <li>Go</li>
+                        <li>Vue</li>
+                        <li>Flask</li>
+                        <li>Tailwind CSS</li>
+                    </ul>
+                </div>
+
+                <div class="skill-group interactable">
+                    <h4>AI & AUTOMATION</h4>
+                    <ul>
+                        <li>AI Agents & Tool Calling</li>
+                        <li>Ollama / Groq / OpenRouter</li>
+                        <li>LLM Prompt Architecture</li>
+                        <li>Local Model Experiments</li>
+                        <li>CLI Tooling</li>
+                    </ul>
+                </div>
+
+                <div class="skill-group interactable">
+                    <h4>TOOLING & DEPLOYMENT</h4>
+                    <ul>
+                        <li>Git / GitHub</li>
+                        <li>Vercel / Cloudflare Pages</li>
+                        <li>SQLite / Turso / LibSQL</li>
+                        <li>Postman / Bruno</li>
+                        <li>Playwright QA</li>
+                    </ul>
+                </div>
+
+                <div class="skill-group interactable">
+                    <h4>GROWTH & SYSTEMS</h4>
+                    <ul>
+                        <li>SEO & Content Systems</li>
+                        <li>Component Design Tokens</li>
+                        <li>API & Webhook Delivery</li>
+                        <li>Cybersecurity (Learning)</li>
+                        <li>Linux / WSL Environments</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER SOCIAL LOGOS -->
+    <footer>
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/sarthak-bystander/" target="_blank" class="social-pill interactable" title="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        </a>
+
+        <!-- X (Twitter) -->
+        <a href="https://x.com/_sarthak_buddy" target="_blank" class="social-pill interactable" title="X (Twitter)">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+
+        <!-- YouTube -->
+        <a href="https://www.youtube.com/@sarthakbystander" target="_blank" class="social-pill interactable" title="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+
+        <!-- Dev.to -->
+        <a href="https://dev.to/sarthakdude" target="_blank" class="social-pill interactable" title="Dev.to">
+            <svg viewBox="0 0 448 512"><path d="M120.12 208.29c-3.88-2.9-8.63-4.47-13.88-4.47h-18.06v110.42h18.84c4.85 0 9.27-1.42 12.82-4.14 3.73-2.86 6.32-7.01 7.42-12.01 1.2-5.46 1.81-12.27 1.81-20.18 0-14.85-2.22-25.59-6.3-32.06-2.27-3.62-5.18-6.66-8.65-9.13l-.001.002zM0 64v384h448V64H0zm152.02 243.61c-4.4 12.84-12.67 22.84-24.11 29.35-10.98 6.25-23.78 9.39-38.07 9.39H48.02V165.65h42.11c15.63 0 29.28 3.52 40.23 10.37 11.23 7.02 19.16 17.27 23.36 30.18 3.99 12.28 5.86 26.54 5.86 42.11 0 17.6-1.99 32.74-5.86 45.31h-.301zm86.29 38.74h-64.88V165.65h64.88v36.63h-38.8v28.84h35.8v35.32h-35.8v38.31h38.8v38.25zm121.72-132.88-33.8 132.88h-31.98l-33.8-132.88h32.18l17.7 82.25 17.7-82.25h32z"/></svg>
+        </a>
+
+        <!-- GitHub -->
+        <a href="https://github.com/sarthakbystander" target="_blank" class="social-pill interactable" title="GitHub">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+    </footer>
+
+    <script>
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Hover effect setup for dynamic interactive elements
+        function attachCursorListeners() {
+            const interactables = document.querySelectorAll('.interactable');
+            interactables.forEach(item => {
+                item.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+                item.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+            });
+        }
+        attachCursorListeners();
+
+        // Single Page Application Tab Switcher
+        function switchTab(tabId) {
+            const sections = ['about', 'works', 'exp'];
+            
+            sections.forEach(s => {
+                const secEl = document.getElementById(s);
+                const btnEl = document.getElementById(`btn-${s}`);
+                
+                if (s === tabId) {
+                    secEl.classList.add('active-section');
+                    if (btnEl) btnEl.classList.add('active');
+                } else {
+                    secEl.classList.remove('active-section');
+                    if (btnEl) btnEl.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
