@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sarthak Bystander | Student Builder & AI/Web Developer</title>
 
-    <!-- Import Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
@@ -25,7 +24,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            cursor: none; /* Hide default cursor for custom one */
+            cursor: none;
         }
 
         body {
@@ -39,7 +38,6 @@
             overflow-x: hidden;
         }
 
-        /* Custom Cursor */
         .cursor {
             width: 20px;
             height: 20px;
@@ -58,7 +56,6 @@
             background-color: rgba(255, 0, 85, 0.2);
         }
 
-        /* Navigation */
         nav {
             padding: 2rem 5%;
             display: flex;
@@ -102,7 +99,6 @@
             color: var(--accent-pink);
         }
 
-        /* Section Toggling Utilities */
         .section {
             display: none;
             opacity: 0;
@@ -122,7 +118,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* About Section Layout */
         #about {
             flex-wrap: wrap;
             justify-content: center;
@@ -166,7 +161,6 @@
             font-family: var(--font-hand);
         }
 
-        /* Adjusted font size for polaroid timeline */
         .polaroid-text .timeline {
             font-size: 1.05rem;
             transform: rotate(-2deg);
@@ -188,7 +182,6 @@
             color: #555;
         }
 
-        /* Decorative Visual Accents */
         .decor-text {
             position: absolute;
             font-family: var(--font-hand);
@@ -222,13 +215,11 @@
             transform: rotate(8deg);
         }
 
-        /* Text Content & Hireability Section Styling */
         .text-content {
             max-width: 580px;
             position: relative;
         }
 
-        /* Pre-Hero Tech Bar & Status */
         .hero-top-bar {
             display: flex;
             flex-direction: column;
@@ -267,7 +258,6 @@
             100% { opacity: 0.4; }
         }
 
-        /* Redesigned Tech Chips Bar */
         .tech-icons-row {
             display: flex;
             align-items: center;
@@ -328,7 +318,6 @@
             color: #d1d1d1;
         }
 
-        /* Hireability Highlight Cards */
         .value-props {
             display: flex;
             flex-direction: column;
@@ -354,7 +343,6 @@
             font-weight: 800;
         }
 
-        /* Call To Action Buttons */
         .cta-group {
             display: flex;
             gap: 1rem;
@@ -421,7 +409,6 @@
             color: var(--accent-pink);
         }
 
-        /* Works & Experience Section Layout */
         .section-container {
             display: flex;
             flex-direction: column;
@@ -445,7 +432,6 @@
             margin-bottom: 2.5rem;
         }
 
-        /* Projects Grid */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -463,6 +449,7 @@
             min-height: 280px;
             transition: all 0.3s ease;
             position: relative;
+            z-index: 0;
             text-decoration: none;
             color: var(--text-main);
             overflow: hidden;
@@ -471,10 +458,17 @@
         .project-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            inset: 0;
             background: linear-gradient(135deg, rgba(255, 0, 85, 0.15) 0%, transparent 100%);
             opacity: 0;
             transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .project-card > * {
+            position: relative;
+            z-index: 1;
         }
 
         .project-card:hover {
@@ -526,13 +520,14 @@
             color: var(--accent-pink);
             text-decoration: none;
             transition: color 0.2s ease;
+            position: relative;
+            z-index: 2;
         }
 
         .project-card .card-footer a:hover {
             color: #ffffff;
         }
 
-        /* Experience & Stack Styling */
         .exp-box {
             background: #111;
             border: 1px solid #222;
@@ -588,7 +583,6 @@
             line-height: 1.8;
         }
 
-        /* Footer / Social Links */
         footer {
             display: flex;
             justify-content: center;
@@ -627,7 +621,6 @@
             transform: translateY(-3px);
         }
 
-        /* Mobile Responsiveness */
         @media (max-width: 768px) {
             #about { gap: 3rem; }
             .giant-hi { font-size: 4.8rem; }
@@ -642,8 +635,6 @@
     </style>
 </head>
 <body>
-
-    <!-- Custom Cursor Element -->
     <div class="cursor" id="cursor"></div>
 
     <nav>
@@ -658,13 +649,10 @@
         </div>
     </nav>
 
-    <!-- ABOUT SECTION -->
     <main id="about" class="section active-section">
-        <!-- Left Side: Polaroid -->
         <div class="polaroid-wrapper interactable">
             <div class="decor-text">About ME</div>
 
-            <!-- Graphic Decor SVG -->
             <svg class="decor-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M50 10C35 10 25 25 25 40C25 55 35 65 35 75V85C35 87.7614 37.2386 90 40 90H60C62.7614 90 65 87.7614 65 85V75C65 65 75 55 75 40C75 25 65 10 50 10Z" fill="black"/>
                 <circle cx="35" cy="45" r="5" fill="white"/>
@@ -676,7 +664,6 @@
             </svg>
 
             <div class="polaroid">
-                <!-- User Photo -->
                 <img src="image.jpg" alt="Sarthak Bystander Photo">
                 <div class="polaroid-text">
                     <span class="timeline">CODING SINCE AGE 12</span>
@@ -689,10 +676,7 @@
             <div class="decor-pink">xx</div>
         </div>
 
-        <!-- Right Side: Text Content -->
         <div class="text-content">
-
-            <!-- Tech Stack Badges & Status Bar BEFORE HII!! -->
             <div class="hero-top-bar">
                 <div class="status-badge">
                     <span class="status-dot"></span>
@@ -700,37 +684,26 @@
                 </div>
 
                 <div class="tech-icons-row">
-                    <!-- Python Badge -->
                     <div class="tech-chip interactable" title="Python">
                         <svg viewBox="0 0 24 24"><path d="M14.25 2.5c5.38 0 5 2.35 5 2.35v2.41H14.1v.82h5.15s3.25-.37 3.25 4.82c0 5.19-2.84 5.01-2.84 5.01h-1.7v-2.39s.12-2.84-2.8-2.84h-5.01s-2.73" /></svg>
                         <span>Python</span>
                     </div>
-
-                    <!-- C++ Badge -->
                     <div class="tech-chip interactable" title="C++">
                         <svg viewBox="0 0 24 24"><path d="M22.22 10.66h-1.42V9.24a.71.71 0 0 0-1.42 0v1.42h-1.42a.71.71 0 0 0 0 1.42h1.42v1.42a.71.71 0 0 0 1.42 0v-1.42h1.42a.71.71 0 0 0 0-1.42zm" /></svg>
                         <span>C++</span>
                     </div>
-
-                    <!-- Go Badge -->
                     <div class="tech-chip interactable" title="Go">
                         <svg viewBox="0 0 24 24"><path d="M1.81 10.25c.34-.15.7-.27 1.07-.35a3.1 3.1 0 0 1 2.05.29c.47.24.87.6 1.16 1.04l.11.17c-.55.22-1.09.47-1.6.77-.37.22-.72.47-1.04.75a3.2 3." /></svg>
                         <span>Go</span>
                     </div>
-
-                    <!-- Vue Badge -->
                     <div class="tech-chip interactable" title="Vue">
                         <svg viewBox="0 0 24 24"><path d="M2 3h3.5L12 15 18.5 3H22L12 21 2 3zm4.5 0h3L12 8.5 14.5 3h3L12 13.5 6.5 3z"/></svg>
                         <span>Vue</span>
                     </div>
-
-                    <!-- Flask Badge -->
                     <div class="tech-chip interactable" title="Flask">
                         <svg viewBox="0 0 24 24"><path d="M19.8 18.4L14 8.7V3h1a1 1 0 0 0 0-2H9a1 1 0 0 0 0 2h1v5.7L4.2 18.4A3 3 0 0 0 6.7 23h10.6a3 3 0 0 0 2.5-4.6zM12 10.5l5.5 9.2a1 1 0 0 1-.8" /></svg>
                         <span>Flask</span>
                     </div>
-
-                    <!-- Tailwind Badge -->
                     <div class="tech-chip interactable" title="Tailwind">
                         <svg viewBox="0 0 24 24"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4" /></svg>
                         <span>Tailwind</span>
@@ -741,21 +714,19 @@
             <h1 class="giant-hi">HI!!</h1>
             <h2 class="role-headline">Student Developer, AI Builder & Growth Marketer</h2>
 
-            <p class="bio-text">I'm <strong>Sarthak Bystander</strong> (<code>sarthakbystander</code>). I engineer open-source software, agentic AI tools, and organic growth engines that scale we[...]
+            <p class="bio-text">I'm <strong>Sarthak Bystander</strong> (<code>sarthakbystander</code>). I engineer open-source software, agentic AI tools, and organic growth engines that scale websites and developer products.</p>
 
-            <!-- Value Proposition & Key Hireability Track Record -->
             <div class="value-props">
                 <div class="prop-item">
                     <span class="prop-icon">⚡</span>
-                    <span><strong>Proven Product Owner:</strong> Founder & Lead Dev at <strong>DevSnips</strong> (open-source UI platform) and creator of <strong>LensDev</strong> (PyPI AI researc[...]
+                    <span><strong>Proven Product Owner:</strong> Founder & Lead Dev at <strong>DevSnips</strong> and creator of <strong>LensDev</strong>.</span>
                 </div>
                 <div class="prop-item">
                     <span class="prop-icon">📈</span>
-                    <span><strong>Growth & Distribution:</strong> Growth Marketing Manager at <strong>ISROOT Tool</strong> + scaled DiscoverStack to 5,600+ organic views via SEO automation.</span[...]
+                    <span><strong>Growth & Distribution:</strong> Growth Marketing Manager at <strong>ISROOT Tool</strong> + scaled DiscoverStack with SEO automation.</span>
                 </div>
             </div>
 
-            <!-- Call-To-Action Group -->
             <div class="cta-group">
                 <button onclick="switchTab('works')" class="cta-btn primary interactable">Explore Flagship Works ↗</button>
                 <a href="https://www.linkedin.com/in/sarthak-bystander/" target="_blank" class="cta-btn secondary interactable">Hire / Collaborate ✉</a>
@@ -770,14 +741,12 @@
         </div>
     </main>
 
-    <!-- WORKS SECTION -->
     <main id="works" class="section">
         <div class="section-container">
             <h1 class="section-title">FLAGSHIP WORKS</h1>
             <p class="section-subtitle">A collection of open-source projects, AI tools, and growth systems I've built and shipped.</p>
 
             <div class="portfolio-grid">
-                <!-- DevSnips -->
                 <div class="project-card interactable">
                     <div>
                         <div class="card-category">FLAGSHIP • OPEN SOURCE</div>
@@ -793,7 +762,6 @@
                     </div>
                 </div>
 
-                <!-- LensDev -->
                 <div class="project-card interactable">
                     <div>
                         <div class="card-category">AI TOOLING • CLI</div>
@@ -809,7 +777,6 @@
                     </div>
                 </div>
 
-                <!-- DiscoverStack -->
                 <div class="project-card interactable">
                     <div>
                         <div class="card-category">SEO & CONTENT ENGINE</div>
@@ -827,7 +794,6 @@
         </div>
     </main>
 
-    <!-- EXPERIENCE & STACK SECTION -->
     <main id="exp" class="section">
         <div class="section-container">
             <h1 class="section-title">EXPERIENCE & STACK</h1>
@@ -896,36 +862,29 @@
         </div>
     </main>
 
-    <!-- FOOTER SOCIAL LOGOS -->
     <footer>
-        <!-- LinkedIn -->
         <a href="https://www.linkedin.com/in/sarthak-bystander/" target="_blank" class="social-pill interactable" title="LinkedIn">
             <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8" /></svg>
         </a>
 
-        <!-- X (Twitter) -->
         <a href="https://x.com/_sarthak_buddy" target="_blank" class="social-pill interactable" title="X (Twitter)">
             <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H" /></svg>
         </a>
 
-        <!-- YouTube -->
         <a href="https://www.youtube.com/@sarthakbystander" target="_blank" class="social-pill interactable" title="YouTube">
             <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.50" /></svg>
         </a>
 
-        <!-- Dev.to -->
         <a href="https://dev.to/sarthakdude" target="_blank" class="social-pill interactable" title="Dev.to">
             <svg viewBox="0 0 448 512"><path d="M120.12 208.29c-3.88-2.9-8.63-4.47-13.88-4.47h-18.06v110.42h18.84c4.85 0 9.27-1.42 12.82-4.14 3.73-2.86 6.32-7.01 7.42-12.01 1.2-5.46 1.81-12.27 1." /></svg>
         </a>
 
-        <!-- GitHub -->
         <a href="https://github.com/sarthakbystander" target="_blank" class="social-pill interactable" title="GitHub">
             <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345" /></svg>
         </a>
     </footer>
 
     <script>
-        // Custom Cursor Logic
         const cursor = document.getElementById('cursor');
 
         document.addEventListener('mousemove', (e) => {
@@ -933,7 +892,6 @@
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Hover effect setup for dynamic interactive elements
         function attachCursorListeners() {
             const interactables = document.querySelectorAll('.interactable');
             interactables.forEach(item => {
@@ -943,7 +901,6 @@
         }
         attachCursorListeners();
 
-        // Single Page Application Tab Switcher
         function switchTab(tabId) {
             const sections = ['about', 'works', 'exp'];
 
